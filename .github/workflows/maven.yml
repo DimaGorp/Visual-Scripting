@@ -10,6 +10,8 @@ name: Java CI with Maven
 stages:
   - build
   - test
+jobs:
+  - build-job
 on:
   push:
     branches: [ "master" ]
