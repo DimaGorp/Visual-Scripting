@@ -16,10 +16,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
-jobs:
+build-job:
   stage: build
   script:
-
     runs-on: ubuntu-latest
 
     steps:
