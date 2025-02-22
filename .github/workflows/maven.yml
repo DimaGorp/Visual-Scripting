@@ -36,7 +36,9 @@ jobs:
         os: [ubuntu-latest,windows-latest, macos-latest]
     runs-on: ${{matrix.os}}
     steps:
-      run: echo Test Completed
+      - name: Run Test
+      - uses: actions/checkout@v4
+        run: echo Test Completed
   #Package Project
   Package:
     name: Package Project
@@ -46,8 +48,9 @@ jobs:
         os: [ubuntu-latest,windows-latest, macos-latest]
     runs-on: ${{matrix.os}}
     steps:
-      -name: "Push artifacts"
-      run: |
-        echo Push Artifacts
-        echo Artifacts Downloaded
+      - name: Push artifacts
+      - uses: actions/checkout@v4
+        run: |
+          echo Push Artifacts
+          echo Artifacts Downloaded
   
