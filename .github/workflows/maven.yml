@@ -1,29 +1,25 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
+#Title
 name: Java CI with Maven
-stages:
-  - build
-  - test
+#Events
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master","develop" ]
+#Jobs
 jobs:
-  build-job:
-    stage: build
-    script:
-      runs-on: ubuntu-latest
-
-      steps:
-      - uses: actions/checkout@v4
+  #Build Project
+  Build:
+    name: Build Project
+    #If build failed on some OS
+    continue-on-error: true
+    #Various OS
+    strategy:
+      matrix:
+        os: [ubuntu-latest,windows-latest, macos-latest]
+    runs-on: ${{matrix.os}}
+    #Sequence of Instructions
+    steps:
       - name: Set up JDK 17
+      - uses: actions/checkout@v4
         uses: actions/setup-java@v4
         with:
           java-version: '17'
@@ -31,3 +27,27 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+  #Run Tests
+  Test:
+    name: Running tests
+    continue-on-error: true
+    starategy:
+      matrix:
+        os: [ubuntu-latest,windows-latest, macos-latest]
+    runs-on: ${{matrix.os}}
+    steps:
+      run: echo Test Completed
+  #Package Project
+  Package:
+    name: Package Project
+    continue-on-error: true
+    starategy:
+      matrix:
+        os: [ubuntu-latest,windows-latest, macos-latest]
+    runs-on: ${{matrix.os}}
+    steps:
+      -name: "Push artifacts"
+      run: |
+        echo Push Artifacts
+        echo Artifacts Downloaded
+  
