@@ -13,7 +13,7 @@
             <Button text="Assignment Block" style="-fx-font-weight: bold;" />
             <Button text="Constant Assignment Block" style="-fx-font-weight: bold;" />
             <Button text="Input Block" onAction="#onInputBlockClick" style="-fx-font-weight: bold;" />
-            <Button text="Print Block" style="-fx-font-weight: bold;" />
+            <Button text="Print Block" onAction="#onPrintBlockClick" style="-fx-font-weight: bold;" />
             <Button text="Condition Block" style="-fx-font-weight: bold;" />
             <Button text="Save All" style="-fx-background-color: lightblue;" />
             <Button text="Load All" style="-fx-background-color: lightblue;" />

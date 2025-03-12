@@ -16,4 +16,9 @@ public class MainController {
     protected void onInputBlockClick() {
         welcomeText.setText("Input Block Clicked!");
     }
+
+    @FXML
+    protected void onPrintBlockClick() {
+        welcomeText.setText("Print Block Clicked!");
+    }
 }
