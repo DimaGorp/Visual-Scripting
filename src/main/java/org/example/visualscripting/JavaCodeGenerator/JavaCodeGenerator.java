@@ -7,17 +7,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 public class JavaCodeGenerator {
-    private final BlockManager blockManager;
-
-    public JavaCodeGenerator(BlockManager blockManager) {
-        this.blockManager = blockManager;
-    }
-
-    public void generateAllBlockLogic() {
+    
+    public void generateAllBlockLogic(List<Block> Blocks) {
         // Iterate over all blocks and generate code for each block
-        for (Block<?> block : blockManager.getAllBlocks().values()) {
+        for (Block<?> block : Blocks) {
             generateBlockLogic(block);
         }
     }
