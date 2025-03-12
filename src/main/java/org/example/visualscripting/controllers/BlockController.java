@@ -14,6 +14,7 @@ public class BlockController {
     }
 
     public void addBlock(Block block) {
+        System.out.println(block.getName());
         blocks.add(block);
     }
 

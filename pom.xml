@@ -130,7 +130,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.example.visualscripting/org.example.visualscripting.HelloApplication
+                            <mainClass>org.example.visualscripting/org.example.visualscripting.MainApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
