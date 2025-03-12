@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.visualscripting.MainController">
+    <!-- Левая боковая панель -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" style="-fx-background-color: lightgray; -fx-padding: 10;">
+            <Button text="Assignment Block" style="-fx-font-weight: bold;" />
+            <Button text="Constant Assignment Block" style="-fx-font-weight: bold;" />
+            <Button text="Input Block" onAction="#onInputBlockClick" style="-fx-font-weight: bold;" />
+            <Button text="Print Block" style="-fx-font-weight: bold;" />
+            <Button text="Condition Block" style="-fx-font-weight: bold;" />
+            <Button text="Save All" style="-fx-background-color: lightblue;" />
+            <Button text="Load All" style="-fx-background-color: lightblue;" />
+            <Button text="Translate into code" style="-fx-background-color: lightblue;" />
+        </VBox>
+    </left>
+    <!-- Центральная рабочая область -->
+    <center>
+        <AnchorPane fx:id="workspace" style="-fx-background-color: white;">
+            <children>
+                <Label fx:id="welcomeText" text="Hello, World!" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
