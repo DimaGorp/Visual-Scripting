@@ -1,8 +1,10 @@
 package org.example.visualscripting.controllers;
 
 import org.example.visualscripting.blocks.Block;
-import java.util.List;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlockController {
     private List<Block> blocks;
@@ -11,16 +13,19 @@ public class BlockController {
         blocks = new ArrayList<>();
     }
 
-
     public void addBlock(Block block) {
+        System.out.println(block.getName());
         blocks.add(block);
     }
 
 
-    public void executeBlocks() {
-        for (Block block : blocks) {
-            System.out.println("Executing block: " + block.getName());
-            block.action();
-        }
+    public List<Block> getBlocks() {
+        return blocks;
+    }
+
+
+    public void saveToJson(String filename) throws IOException {
+        JsonController jsonController = new JsonController();
+        jsonController.saveBlocksToJson(filename, blocks);
     }
 }

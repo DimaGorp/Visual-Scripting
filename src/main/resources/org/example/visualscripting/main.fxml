@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="641.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.visualscripting.MainController">
+    <!-- Левая боковая панель -->
+    <left>
+        <VBox fx:id="sidebar" prefHeight="641.0" prefWidth="217.0" spacing="10" style="-fx-background-color: lightgray; -fx-padding: 10;">
+            <Button prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="Assignment Block" />
+            <Button prefWidth="180.0" style="-fx-font-weight: bold;" text="Constant Assignment Block" />
+            <Button prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="Input Block" />
+         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;"  text="Print Block" />
+            <Button prefWidth="180.0" style="-fx-font-weight: bold;" text="Condition Block" />
+            <Button prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="If Block" />
+            <Button prefWidth="180.0" style="-fx-background-color: lightblue;" text="Save All" />
+            <Button prefWidth="180.0" style="-fx-background-color: lightblue;" text="Load All" />
+            <Button prefWidth="180.0" style="-fx-background-color: lightblue;" text="Translate into code" />
+        </VBox>
+    </left>
+    <!-- Центральная рабочая область -->
+    <center>
+        <AnchorPane fx:id="workspace" prefHeight="649.0" prefWidth="438.0" style="-fx-background-color: white;">
+            <children>
+                <Label fx:id="welcomeText" text="Hello, World!" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
