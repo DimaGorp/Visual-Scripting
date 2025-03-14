@@ -36,11 +36,11 @@ public class BlockManager {
             this();
             this.data = data;
         }
-        void setLeft(Block data){
-            left = new BlockNode(data);
+        void setLeft(BlockNode data){
+            left = data;
         }
-        void setRight(Block data){
-            right = new BlockNode(data);
+        void setRight(BlockNode data){
+            right = data;
         }
         BlockNode getLeft(){
             return left;
@@ -51,40 +51,45 @@ public class BlockManager {
     };
     private BlockNode head;
     private BlockNode tail;
-    BlockManager(){
+    public BlockManager(){
         head = new BlockNode(new StartBlock());
         tail = new BlockNode(new EndBlock());
+        head.next = tail;
     }
 
-    boolean Add(Block newBlock){
+    public boolean Add(Block newBlock){
         for(BlockNode cur = head; cur!=tail;cur = cur.next){
-            if(cur.next!=tail){
+            if(cur.next==tail){
+
                 if(newBlock instanceof org.example.visualscripting.blocks.IfValueBlock){
                     cur.next = new BlockLogicalNode(newBlock);
                     BlockLogicalNode curLogical = (BlockLogicalNode) cur.next;
-                    curLogical.setLeft(tail.data);
-                    curLogical.setRight(tail.data);
+                    curLogical.setLeft(tail);
+                    curLogical.setRight(tail);
                     return true;
                 }   
                 cur.next = new BlockNode(newBlock);
+                cur.next.next = tail;
                 return true;
             }
         }
         return false;
     }
-    void Print(){
+    public void Print(){
         for(BlockNode cur = head; cur!=tail;cur = cur.next){
+            System.out.println(cur.data.toString());  
             if(cur.data instanceof org.example.visualscripting.blocks.IfValueBlock){
-                System.out.println(cur.data.toString());
                 for(BlockNode curLeft = ((BlockLogicalNode)cur).getLeft(); curLeft!=tail;cur = curLeft.next){
                     System.out.println(curLeft.data.toString());
                 }
                 for(BlockNode curRight = ((BlockLogicalNode)cur).getRight(); curRight!=tail;curRight = cur.next){
                     System.out.println(curRight.data.toString());
                 }
+                break; 
             } 
-            System.out.println(cur.data.toString());  
+            
         }
+        System.out.println(tail.data.toString());  
     }
     
 }
