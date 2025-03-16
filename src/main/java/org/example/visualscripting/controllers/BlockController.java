@@ -1,13 +1,11 @@
 package org.example.visualscripting.controllers;
 
 import org.example.visualscripting.blocks.Block;
+import org.example.visualscripting.blocks.IfValueBlock;
 import org.example.visualscripting.blocks.StartBlock;
 import org.example.visualscripting.blockmanager.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlockController {
     private List<Block> blocks;
@@ -27,12 +25,12 @@ public class BlockController {
     }
 
     public void addBlock(Block block) {
-        System.out.println(block.getName());
-        if(bm.Add(block)){
-            bm.Print();
-            System.out.println("-------------------------------------------------------------");
-        }
-        //blocks.add(block);
+        bm.print();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        bm.insert(block, input);
+
+
     }
 
     public void blockConnection(Block block) {
