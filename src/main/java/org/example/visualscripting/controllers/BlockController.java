@@ -1,14 +1,25 @@
 package org.example.visualscripting.controllers;
 
 import org.example.visualscripting.blocks.Block;
+import org.example.visualscripting.blocks.StartBlock;
 import org.example.visualscripting.blockmanager.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlockController {
     private List<Block> blocks;
     BlockManager bm;
+
+    private Map<Integer, Block> blockMap = new HashMap<>();
+    private int blockCount = 0;
+
+    {
+        Block startBlock = new StartBlock();
+        blockMap.put(0, startBlock);
+    }
 
     public BlockController() {
         blocks = new ArrayList<>();
@@ -24,6 +35,12 @@ public class BlockController {
         //blocks.add(block);
     }
 
+    public void blockConnection(Block block) {
+
+        blockCount++;
+        blockMap.put(blockCount, block);
+
+    }
 
     public List<Block> getBlocks() {
         return blocks;

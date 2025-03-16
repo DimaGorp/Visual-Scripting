@@ -7,8 +7,4 @@ public class ValueToValueBlock implements Block<Integer> {
         return "valueToValue";
     }
 
-    @Override
-    public Integer action(Object... inputs) {
-        return (int) inputs[0];  // Возвращаем значение из первого входа
-    }
 }

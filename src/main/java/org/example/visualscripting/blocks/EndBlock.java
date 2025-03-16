@@ -1,17 +1,10 @@
 package org.example.visualscripting.blocks;
 
-public class EndBlock implements Block<Void>{
 
+public class EndBlock implements Block{
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("End");
+        return "end";
     }
 
-    @Override
-    public Void action(Object... inputs) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'action'");
-    }
-    
 }
