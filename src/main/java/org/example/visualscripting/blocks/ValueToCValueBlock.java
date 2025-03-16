@@ -12,8 +12,5 @@ public class ValueToCValueBlock implements Block<Integer> {
         return "valueToCValue";
     }
 
-    @Override
-    public Integer action(Object... inputs) {
-        return constantValue;  // Возвращаем константу
-    }
+
 }

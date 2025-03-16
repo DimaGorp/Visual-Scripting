@@ -1,10 +1,8 @@
 package org.example.visualscripting.blocks;
 
-public class ValueToValueBlock implements Block<Integer> {
-
+public class EndBlock implements Block{
     @Override
     public String getName() {
-        return "valueToValue";
+        return "end";
     }
-
 }
