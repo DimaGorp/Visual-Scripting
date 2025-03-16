@@ -1,6 +1,7 @@
 package org.example.visualscripting.blockmanager;
 
 import org.example.visualscripting.blocks.Block;
+import org.example.visualscripting.blocks.EndBlock;
 import org.example.visualscripting.blocks.IfValueBlock;
 
 import java.util.UUID;
@@ -33,8 +34,14 @@ public class BlockLogicalNode extends BlockNode {
         return rightId;
     }
 
-    void setLeft(BlockNode data) {
+    void setLeft(BlockNode data,BlockNode end) {
+        if(data.data instanceof EndBlock) {
+            left = data;
+            return;
+        }
         left = data;
+        left.next = end;
+
     }
     private BlockNode find(String id) {
         BlockNode current;
@@ -51,8 +58,13 @@ public class BlockLogicalNode extends BlockNode {
         return null;
     }
 
-    void setRight(BlockNode data) {
+    void setRight(BlockNode data, BlockNode end) {
+        if(data.data instanceof EndBlock) {
+            right = data;
+            return;
+        }
         right = data;
+        right.next = end;
     }
 
     BlockNode getLeft() {

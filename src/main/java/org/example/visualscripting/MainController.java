@@ -105,7 +105,7 @@ public class MainController implements Initializable {
         System.out.println(blockType);
         return switch (blockType) {
             case "Print" -> new PrintValueBlock();
-            case "If" -> new IfValueBlock("equal",2);
+            case "If" -> new IfValueBlock(IfValueBlock.Comparison.EQUAL,2);
             case "Input" -> new InputValueBlock();
             case "Assignment" -> new ValueToValueBlock();
             case "Constant Assignment" -> new ValueToCValueBlock(2);

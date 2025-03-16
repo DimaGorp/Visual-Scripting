@@ -31,24 +31,31 @@ public class BlockManager {
     public boolean insert(Block<?> newBlock, String Id) {
         for (BlockNode cur = head; cur != tail; cur = cur.next) {
             if (cur.data.getId().equals(Id)) {  // Проверяем ID
-
                 if (newBlock instanceof IfValueBlock) {
-
                     BlockLogicalNode logicNode = new BlockLogicalNode(newBlock);
-                    if(logicNode.getLeftId().equals(Id)){
-                        logicNode.setLeft(new BlockNode(newBlock));
-                    }else if(logicNode.getRightId().equals(Id)){
-                        logicNode.setRight(new BlockNode(newBlock));
-                    } else{
-                        return logicNode.insert(newBlock, Id);
+                    cur.next = logicNode;
+                    if (logicNode.getLeft() == null && logicNode.getRight() == null) {
+                        logicNode.setLeft(tail, tail);
+                        logicNode.setRight(tail, tail);
                     }
-
-                } else {
-                    BlockNode next = cur.next;
-                    cur.next = new BlockLogicalNode(newBlock);
-                    cur.next.next = next;
+                    return true;
                 }
+                BlockNode next = cur.next;
+                cur.next = new BlockNode(newBlock);
+                cur.next.next = next;
                 return true;
+            }else{
+                if (cur instanceof BlockLogicalNode) {
+                    BlockLogicalNode logicalNode = (BlockLogicalNode)cur;
+                    if (logicalNode.getLeftId().equals(Id)) {
+                        logicalNode.setLeft(new BlockNode(newBlock), tail);
+                    } else if (logicalNode.getRightId().equals(Id)) {
+                        logicalNode.setRight(new BlockNode(newBlock), tail);
+                    } else {
+                        return logicalNode.insert(newBlock, Id);
+                    }
+                    return false;
+                }
             }
 
         }
@@ -57,12 +64,20 @@ public class BlockManager {
 
     public void print(){
         for(BlockNode cur = head; cur!=tail;cur = cur.next){
-            System.out.println(cur.data.getId() + " " +cur.data.getName());
+            if(cur instanceof BlockLogicalNode){
+                System.out.println(cur.data.getName());
+            }else {
+                System.out.println(cur.data.getId() + " " + cur.data.getName());
+            }
             if(cur.data instanceof IfValueBlock){
-                for(BlockNode curLeft = ((BlockLogicalNode)cur).getLeft(); curLeft!=tail;cur = curLeft.next){
+                BlockLogicalNode ifBlock = (BlockLogicalNode)cur;
+                System.out.println(ifBlock.getLeftId() + " - true");
+
+                for(BlockNode curLeft = ((BlockLogicalNode)cur).getLeft(); curLeft!=tail;curLeft = curLeft.next){
                     System.out.println(curLeft.data.getId() + " " +curLeft.data.getName());
                 }
-                for(BlockNode curRight = ((BlockLogicalNode)cur).getRight(); curRight!=tail;curRight = cur.next){
+                System.out.println(ifBlock.getRightId() + " - false");
+                for(BlockNode curRight = ((BlockLogicalNode)cur).getRight(); curRight!=tail;curRight = curRight.next){
                     System.out.println(curRight.data.getId() + " " +curRight.data.getName());
                 }
                 break; 

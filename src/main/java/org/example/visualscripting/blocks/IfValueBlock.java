@@ -8,8 +8,8 @@ public class IfValueBlock implements Block<Boolean> {
     private int comparisonValue;    // Константа для сравнения
     private String id;
 
-    public IfValueBlock(String comparisonType, int comparisonValue) {
-        this.comparisonType = Comparison.valueOf(comparisonType);
+    public IfValueBlock(Comparison comparisonType, int comparisonValue) {
+        this.comparisonType = comparisonType;
         this.comparisonValue = comparisonValue;
         this.id = UUID.randomUUID().toString();
     }
@@ -24,7 +24,7 @@ public class IfValueBlock implements Block<Boolean> {
         return id;
     }
 
-    private enum Comparison{
+    public enum Comparison{
         EQUAL, LESS, GREATER, ELESS, EGREATER
     }
 
