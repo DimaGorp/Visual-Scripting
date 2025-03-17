@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="641.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.visualscripting.MainController">
-    <!-- Левая боковая панель -->
+<BorderPane prefHeight="641.0" prefWidth="731.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.visualscripting.MainController">
     <left>
-        <VBox fx:id="sidebar" prefHeight="641.0" prefWidth="217.0" spacing="10" style="-fx-background-color: lightgray; -fx-padding: 10;">
-            <Button prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="Assignment Block" />
-            <Button prefWidth="180.0" style="-fx-font-weight: bold;" text="Constant Assignment Block" />
-            <Button prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="Input Block" />
-         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;"  text="Print Block" />
-            <Button prefWidth="180.0" style="-fx-font-weight: bold;" text="Condition Block" />
-            <Button prefHeight="25.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="If Block" />
-            <Button prefWidth="180.0" style="-fx-background-color: lightblue;" text="Save All" />
-            <Button prefWidth="180.0" style="-fx-background-color: lightblue;" text="Load All" />
-            <Button prefWidth="180.0" style="-fx-background-color: lightblue;" text="Translate into code" />
+        <VBox fx:id="sidebar" prefWidth="217.0" spacing="10"
+              style="-fx-background-color: lightgray; -fx-padding: 10;">
+            <Button fx:id="btnAssignment" text="Assignment Block" />
+            <Button fx:id="btnConstantAssignment" text="Constant Assignment Block" />
+            <Button fx:id="btnInput" text="Input Block" />
+            <Button fx:id="btnPrint" text="Print Block" />
+            <Button fx:id="btnCondition" text="Condition Block" />
+            <Button fx:id="btnIf" text="If Block" />
+            <Button fx:id="btnSave" text="Save All" style="-fx-background-color: lightblue;" />
+            <Button fx:id="btnLoad" text="Load All" style="-fx-background-color: lightblue;" />
+            <Button fx:id="btnTranslate" text="Translate into code" style="-fx-background-color: lightblue;" />
         </VBox>
     </left>
-    <!-- Центральная рабочая область -->
     <center>
-        <AnchorPane fx:id="workspace" prefHeight="649.0" prefWidth="438.0" style="-fx-background-color: white;">
-            <children>
-                <Label fx:id="welcomeText" text="Hello, World!" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
-            </children>
-        </AnchorPane>
+        <!-- Рабочее поле, в которое контроллер динамически добавляет блоки, линии и drop‑зоны для веток If -->
+        <AnchorPane fx:id="workspace" />
     </center>
 </BorderPane>

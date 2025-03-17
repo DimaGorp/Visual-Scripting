@@ -25,10 +25,10 @@ public class BlockController {
     }
 
     public void addBlock(Block block) {
-        bm.print();
+        /*bm.print();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        bm.insert(block, input);
+        bm.insert(block, input);*/
 
 
     }
