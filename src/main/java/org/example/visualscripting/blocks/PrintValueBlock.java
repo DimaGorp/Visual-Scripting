@@ -1,16 +1,23 @@
 package org.example.visualscripting.blocks;
 
+import java.util.UUID;
+
 public class PrintValueBlock implements Block<Void> {
 
+    private final String id;
+
+    public PrintValueBlock() {
+        this.id = UUID.randomUUID().toString();
+    }
     @Override
     public String getName() {
         return "printValue";
     }
 
     @Override
-    public Void action(Object... inputs) {
-        int value = (int) inputs[0];  // Получаем значение V
-        System.out.println(value);  // Печатаем значение на экране
-        return null;
+    public String getId() {
+        return id;
     }
+
+
 }

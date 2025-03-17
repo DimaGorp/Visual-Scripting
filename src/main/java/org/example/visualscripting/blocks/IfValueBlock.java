@@ -1,12 +1,17 @@
 package org.example.visualscripting.blocks;
 
-public class IfValueBlock implements Block<Boolean> {
-    private String comparisonType;  // "equal" или "less"
-    private int comparisonValue;    // Константа для сравнения
+import java.util.UUID;
 
-    public IfValueBlock(String comparisonType, int comparisonValue) {
+public class IfValueBlock implements Block<Boolean> {
+
+    private Comparison comparisonType;  // "equal" или "less"
+    private int comparisonValue;    // Константа для сравнения
+    private String id;
+
+    public IfValueBlock(Comparison comparisonType, int comparisonValue) {
         this.comparisonType = comparisonType;
         this.comparisonValue = comparisonValue;
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -15,13 +20,13 @@ public class IfValueBlock implements Block<Boolean> {
     }
 
     @Override
-    public Boolean action(Object... inputs) {
-        int value = (int) inputs[0];  // Получаем значение V из входных данных
-        if ("equal".equals(comparisonType)) {
-            return value == comparisonValue;  // Сравнение V == C
-        } else if ("less".equals(comparisonType)) {
-            return value < comparisonValue;  // Сравнение V < C
-        }
-        return false;
+    public String getId() {
+        return id;
     }
+
+    public enum Comparison{
+        EQUAL, LESS, GREATER, ELESS, EGREATER
+    }
+
+
 }
