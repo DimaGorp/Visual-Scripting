@@ -15,4 +15,8 @@ public class BlockNode {
         this();
         this.data = data;
     }
+    public BlockNode(final BlockNode other){
+        data = other.data;
+        next = other.next;
+    }
 }

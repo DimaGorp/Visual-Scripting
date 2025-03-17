@@ -22,8 +22,10 @@ public class BlockLogicalNode extends BlockNode {
 
     }
 
-    public BlockLogicalNode(Block data) {
+    public BlockLogicalNode(Block data, BlockNode end) {
         this();
+        left = end;
+        right = end;
         this.data = data;
     }
 
@@ -34,23 +36,24 @@ public class BlockLogicalNode extends BlockNode {
         return rightId;
     }
 
-    void setLeft(BlockNode data,BlockNode end) {
-        if(data.data instanceof EndBlock) {
-            left = data;
-            return;
+    void setLeft(BlockNode data) {
+        BlockNode next = null;
+        if(left.data instanceof EndBlock){
+            next = new BlockNode(left);
+        }else {
+            next = left;
         }
-        left = data;
-        left.next = end;
-
+        left = new BlockNode(data.data);
+        left.next = next;
     }
     private BlockNode find(String id) {
-        BlockNode current;
-        for (current = left.next; !current.data.getId().equals(id); current = current.next) {
+
+        for (BlockNode current = left; !(current.data instanceof EndBlock); current = current.next) {
             if(current.data.getId().equals(id)) {
                 return current;
             }
         }
-        for (current = right.next; !current.data.getId().equals(id); current = current.next) {
+        for (BlockNode current = right; !(current.data instanceof EndBlock); current = current.next) {
             if(current.data.getId().equals(id)) {
                 return current;
             }
@@ -58,13 +61,15 @@ public class BlockLogicalNode extends BlockNode {
         return null;
     }
 
-    void setRight(BlockNode data, BlockNode end) {
-        if(data.data instanceof EndBlock) {
-            right = data;
-            return;
+    void setRight(BlockNode data) {
+        BlockNode next = null;
+        if(right.data instanceof EndBlock){
+            next = new BlockNode(right);
+        }else {
+            next = right;
         }
-        right = data;
-        right.next = end;
+        right = new BlockNode(data.data);
+        right.next = next;
     }
 
     BlockNode getLeft() {
@@ -79,7 +84,7 @@ public class BlockLogicalNode extends BlockNode {
         if(current == null) {
             return false;
         }
-        BlockNode next = current.next.next;
+        BlockNode next = current.next;
         current.next = new BlockNode(newBlock);
         current.next.next = next;
         return true;
