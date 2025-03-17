@@ -1,17 +1,18 @@
 package org.example.visualscripting.blocks;
 
+
 import java.util.UUID;
 
-public class ValueToValueBlock implements Block<Integer> {
+public class EndBlock implements Block{
 
     private final String id;
 
-    public ValueToValueBlock() {
+    public EndBlock() {
         this.id = UUID.randomUUID().toString();
     }
     @Override
     public String getName() {
-        return "valueToValue";
+        return "end";
     }
 
     @Override

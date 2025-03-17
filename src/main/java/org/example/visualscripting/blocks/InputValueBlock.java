@@ -1,18 +1,24 @@
 package org.example.visualscripting.blocks;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class InputValueBlock implements Block<Integer> {
 
+    private final String id;
+
+    public InputValueBlock() {
+        this.id = UUID.randomUUID().toString();
+    }
     @Override
     public String getName() {
         return "inputValue";
     }
 
     @Override
-    public Integer action(Object... inputs) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a value: ");
-        return scanner.nextInt();
+    public String getId() {
+        return id;
     }
+
+
 }

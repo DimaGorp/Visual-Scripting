@@ -1,10 +1,13 @@
 package org.example.visualscripting.blocks;
 
+import java.util.UUID;
+
 public class ValueToCValueBlock implements Block<Integer> {
     private int constantValue;
-
+    private String id;
     public ValueToCValueBlock(int constantValue) {
         this.constantValue = constantValue;
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -13,7 +16,9 @@ public class ValueToCValueBlock implements Block<Integer> {
     }
 
     @Override
-    public Integer action(Object... inputs) {
-        return constantValue;  // Возвращаем константу
+    public String getId() {
+        return id;
     }
+
+
 }
