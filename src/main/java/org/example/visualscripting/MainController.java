@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -125,6 +126,10 @@ public class MainController implements Initializable {
     
     private void translateCode() {
         System.out.println("Translating to code...");
-        JCG.generateAllBlockLogic(blockController.getBlocks());
+        try {
+            JCG.generateAllBlockLogic(blockController.getBlocks());
+        } catch (IOException e) {
+            e.printStackTrace(); // Log or handle the exception
+        }
     }
 }

@@ -2,7 +2,11 @@ package org.example.visualscripting.JavaCodeGenerator;
 
 import org.example.visualscripting.blockmanager.BlockManager;
 import org.example.visualscripting.blocks.Block;
+import com.squareup.javapoet.*;
 
+import javax.lang.model.element.Modifier;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,12 +14,29 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 public class JavaCodeGenerator {
-    
-    public void generateAllBlockLogic(List<Block> Blocks) {
-        // Iterate over all blocks and generate code for each block
-        for (Block<?> block : Blocks) {
-            generateBlockLogic(block);
-        }
+
+    public void generateAllBlockLogic(List<Block> Blocks) throws IOException {
+        // Define a method
+        MethodSpec sayHello = MethodSpec.methodBuilder("sayHello")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(void.class)
+                .addStatement("System.out.println($S)", "Hello, World!")
+                .build();
+
+        // Define a class
+        TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
+                .addModifiers(Modifier.PUBLIC)
+                .addMethod(sayHello)
+                .build();
+
+        // Define a package and generate the file
+        JavaFile javaFile = JavaFile.builder("com.example", helloWorld)
+                .build();
+
+        // Write to file
+        javaFile.writeTo(Paths.get("./JavaGeneratedCode/"));
+
+        System.out.println("Java file generated successfully!");
     }
 
     private void generateBlockLogic(Block<?> block) {
