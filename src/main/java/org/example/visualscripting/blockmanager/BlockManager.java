@@ -61,11 +61,9 @@ public class BlockManager {
 
     public void print(){
         for(BlockNode cur = head; cur!=tail;cur = cur.next){
-            if(cur instanceof BlockLogicalNode){
-                System.out.println(cur.data.getName());
-            }else {
-                System.out.println(cur.data.getId() + " " + cur.data.getName());
-            }
+
+            System.out.println(cur.data.getId() + " " + cur.data.getName());
+
             if(cur.data instanceof IfValueBlock){
                 BlockLogicalNode ifBlock = (BlockLogicalNode)cur;
                 System.out.println(ifBlock.getLeftId() + " - true");

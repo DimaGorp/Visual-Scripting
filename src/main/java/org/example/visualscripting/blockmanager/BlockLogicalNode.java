@@ -13,10 +13,12 @@ public class BlockLogicalNode extends BlockNode {
     private BlockNode right;
     private String rightId;
 
+    private BlockNode union;
 
     public BlockLogicalNode() {
         left = null;
         right = null;
+        union = null;
         leftId = UUID.randomUUID().toString();
         rightId = UUID.randomUUID().toString();
 
@@ -26,6 +28,7 @@ public class BlockLogicalNode extends BlockNode {
         this();
         left = end;
         right = end;
+        union = end;;
         this.data = data;
     }
 
@@ -34,6 +37,14 @@ public class BlockLogicalNode extends BlockNode {
     }
     public String getRightId(){
         return rightId;
+    }
+    public BlockNode getUnion() { return union; }
+    public void setUnion(BlockNode union) { this.union = union; }
+    BlockNode getLeft() {
+        return left;
+    }
+    BlockNode getRight() {
+        return right;
     }
 
     void setLeft(BlockNode data) {
@@ -45,6 +56,16 @@ public class BlockLogicalNode extends BlockNode {
         }
         left = new BlockNode(data.data);
         left.next = next;
+        if (!(next.data instanceof EndBlock)) {
+            connectToUnion(left);
+        }
+    }
+    private void connectToUnion(BlockNode branch) {
+        BlockNode current = branch;
+        while (current.next != null && !(current.next.data instanceof EndBlock)) {
+            current = current.next;
+        }
+        current.next = union;
     }
     private BlockNode find(String id) {
 
@@ -72,13 +93,7 @@ public class BlockLogicalNode extends BlockNode {
         right.next = next;
     }
 
-    BlockNode getLeft() {
-        return left;
-    }
 
-    BlockNode getRight() {
-        return right;
-    }
     public boolean insert(Block<?> newBlock, String Id) throws NullPointerException {
         BlockNode current = find(Id);
         if(current == null) {
@@ -87,6 +102,9 @@ public class BlockLogicalNode extends BlockNode {
         BlockNode next = current.next;
         current.next = new BlockNode(newBlock);
         current.next.next = next;
+        if (data instanceof IfValueBlock) {
+            connectToUnion(current.next);
+        }
         return true;
     }
 }
