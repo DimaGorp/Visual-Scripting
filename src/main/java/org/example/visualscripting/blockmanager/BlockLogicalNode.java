@@ -58,9 +58,9 @@ public class BlockLogicalNode extends BlockNode {
         }
         left = new BlockNode(data.data);
         left.next = next;
-        if (!(next.data instanceof EndBlock)) {
-            connectToUnion(left);
-        }
+        //if (!(next.data instanceof EndBlock)) {
+        //    connectToUnion(left);
+        //}
     }
     private void connectToUnion(BlockNode branch) {
         BlockNode current = branch;
@@ -93,15 +93,17 @@ public class BlockLogicalNode extends BlockNode {
         }
         right = new BlockNode(data.data);
         right.next = next;
+        
+        
     }
 
 
     public boolean insert(Block<?> newBlock, String Id) throws NullPointerException {
         BlockNode current = find(Id);
         if(current == null) {
-            BlockNode next = union;
-            union = new BlockNode(newBlock);
-            union.next = next;
+            //BlockNode next = union;
+            //union = new BlockNode(newBlock);
+            //union.next = next;
             return true;
         }
         BlockNode next = current.next;
