@@ -21,6 +21,7 @@ public class BlockLogicalNode extends BlockNode {
         union = null;
         leftId = UUID.randomUUID().toString();
         rightId = UUID.randomUUID().toString();
+        next = null;
 
     }
 
@@ -30,6 +31,7 @@ public class BlockLogicalNode extends BlockNode {
         right = end;
         union = end;;
         this.data = data;
+        next = union;
     }
 
     public String getLeftId(){
@@ -69,12 +71,12 @@ public class BlockLogicalNode extends BlockNode {
     }
     private BlockNode find(String id) {
 
-        for (BlockNode current = left; !(current.data instanceof EndBlock); current = current.next) {
+        for (BlockNode current = left; (current != union); current = current.next) {
             if(current.data.getId().equals(id)) {
                 return current;
             }
         }
-        for (BlockNode current = right; !(current.data instanceof EndBlock); current = current.next) {
+        for (BlockNode current = right; (current != union) ; current = current.next) {
             if(current.data.getId().equals(id)) {
                 return current;
             }
@@ -97,7 +99,10 @@ public class BlockLogicalNode extends BlockNode {
     public boolean insert(Block<?> newBlock, String Id) throws NullPointerException {
         BlockNode current = find(Id);
         if(current == null) {
-            return false;
+            BlockNode next = union;
+            union = new BlockNode(newBlock);
+            union.next = next;
+            return true;
         }
         BlockNode next = current.next;
         current.next = new BlockNode(newBlock);

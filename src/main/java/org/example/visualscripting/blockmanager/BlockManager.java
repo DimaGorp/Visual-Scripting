@@ -32,7 +32,8 @@ public class BlockManager {
         for (BlockNode cur = head; cur != tail; cur = cur.next) {
             if (cur.data.getId().equals(Id)) {  // Проверяем ID
                 if (newBlock instanceof IfValueBlock) {
-                    BlockLogicalNode logicNode = new BlockLogicalNode(newBlock, tail);
+                    BlockLogicalNode logicNode = new BlockLogicalNode(newBlock, cur.next);
+                    logicNode.insert(cur.next.data, Id);
                     cur.next = logicNode;
                     return true;
                 }
@@ -43,6 +44,12 @@ public class BlockManager {
             }else{
                 if (cur instanceof BlockLogicalNode) {
                     BlockLogicalNode logicalNode = (BlockLogicalNode)cur;
+                    if(logicalNode.data.getId().equals(Id)){
+                        BlockNode next = logicalNode.getUnion();
+                        logicalNode.setUnion(new BlockNode(newBlock));
+                        logicalNode.getUnion().next = next;
+                        return true;
+                    }
                     if (logicalNode.getLeftId().equals(Id)) {
                         logicalNode.setLeft(new BlockNode(newBlock));
                         return true;
@@ -52,6 +59,7 @@ public class BlockManager {
                     } else {
                         return logicalNode.insert(newBlock, Id);
                     }
+                    //if(logicalNode.data.getId().equals(Id))
                 }
             }
 
@@ -66,13 +74,15 @@ public class BlockManager {
 
             if(cur.data instanceof IfValueBlock){
                 BlockLogicalNode ifBlock = (BlockLogicalNode)cur;
+                BlockNode union = ifBlock.getUnion();
                 System.out.println(ifBlock.getLeftId() + " - true");
-
-                for(BlockNode curLeft = ((BlockLogicalNode)cur).getLeft(); !(curLeft.data instanceof EndBlock);curLeft = curLeft.next){
+                BlockNode curLeft = ((BlockLogicalNode)cur).getLeft();
+                BlockNode curRight = ((BlockLogicalNode)cur).getRight();
+                for(; (curLeft != union );curLeft = curLeft.next){
                     System.out.println(curLeft.data.getId() + " " +curLeft.data.getName());
                 }
                 System.out.println(ifBlock.getRightId() + " - false");
-                for(BlockNode curRight = ((BlockLogicalNode)cur).getRight(); !(curRight.data instanceof EndBlock);curRight = curRight.next){
+                for(; (curRight != union );curRight = curRight.next){
                     System.out.println(curRight.data.getId() + " " +curRight.data.getName());
                 }
                 break; 
