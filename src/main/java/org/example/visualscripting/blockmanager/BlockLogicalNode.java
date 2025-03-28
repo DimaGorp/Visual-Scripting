@@ -41,7 +41,25 @@ public class BlockLogicalNode extends BlockNode {
         return rightId;
     }
     public BlockNode getUnion() { return union; }
-    public void setUnion(BlockNode union) { this.union = union; }
+    public void setUnion(BlockNode union) { 
+        if(!left.data.equals(this.union.data)){
+            for(BlockNode cur = left;!cur.data.equals(this.union.data);cur = cur.next){
+                if(cur.next.data.equals(this.union.data)){
+                    cur.next = union;
+                    break;
+                }
+            }
+        }
+        if(!right.data.equals(this.union.data)){
+            for(BlockNode cur = right;!cur.data.equals(this.union.data);cur = cur.next){
+                if(cur.next.data.equals(this.union.data)){
+                    cur.next = union;
+                    break;
+                }
+            }
+        }
+        this.union = union; 
+    }
     BlockNode getLeft() {
         return left;
     }
@@ -51,32 +69,22 @@ public class BlockLogicalNode extends BlockNode {
 
     void setLeft(BlockNode data) {
         BlockNode next = null;
-        if(left.data instanceof EndBlock){
+        if(left == union){
             next = new BlockNode(left);
         }else {
             next = left;
         }
         left = new BlockNode(data.data);
         left.next = next;
-        //if (!(next.data instanceof EndBlock)) {
-        //    connectToUnion(left);
-        //}
-    }
-    private void connectToUnion(BlockNode branch) {
-        BlockNode current = branch;
-        while (current.next != null && !(current.next.data instanceof EndBlock)) {
-            current = current.next;
-        }
-        current.next = union;
     }
     private BlockNode find(String id) {
 
-        for (BlockNode current = left; (current != union); current = current.next) {
+        for (BlockNode current = left; (!current.data.equals(union.data)); current = current.next) {
             if(current.data.getId().equals(id)) {
                 return current;
             }
         }
-        for (BlockNode current = right; (current != union) ; current = current.next) {
+        for (BlockNode current = right; (!current.data.equals(union.data)) ; current = current.next) {
             if(current.data.getId().equals(id)) {
                 return current;
             }
@@ -86,7 +94,7 @@ public class BlockLogicalNode extends BlockNode {
 
     void setRight(BlockNode data) {
         BlockNode next = null;
-        if(right.data instanceof EndBlock){
+        if(right == union){
             next = new BlockNode(right);
         }else {
             next = right;
@@ -101,17 +109,42 @@ public class BlockLogicalNode extends BlockNode {
     public boolean insert(Block<?> newBlock, String Id) throws NullPointerException {
         BlockNode current = find(Id);
         if(current == null) {
-            //BlockNode next = union;
-            //union = new BlockNode(newBlock);
-            //union.next = next;
+            return false;
+        }
+        if (newBlock instanceof IfValueBlock) {
+            BlockLogicalNode logicNode = new BlockLogicalNode(newBlock, current.next);
+            logicNode.insert(current.next.data, Id);
+            current.next = logicNode;
             return true;
         }
         BlockNode next = current.next;
         current.next = new BlockNode(newBlock);
         current.next.next = next;
-        if (data instanceof IfValueBlock) {
-            connectToUnion(current.next);
-        }
         return true;
+    }
+    public BlockNode print(){
+        System.out.println(data.getId() + " " + data.getName());
+        System.out.println("\t"+getLeftId() + " - true");
+        BlockNode curLeft = getLeft();
+        BlockNode curRight = getRight();
+        for(; !(curLeft.data.equals(union.data) );curLeft = curLeft.next){
+            if(curLeft.data instanceof IfValueBlock){
+                BlockLogicalNode ifBlock = (BlockLogicalNode)curLeft;
+                curLeft = ifBlock.print();
+                continue;
+            }
+            System.out.println("\t\t"+curLeft.data.getId() + " " +curLeft.data.getName());
+        }
+        System.out.println("\t"+getRightId() + " - false");
+        for(; !(curRight.data.equals(union.data));curRight = curRight.next){
+            if(curRight.data instanceof IfValueBlock){
+                BlockLogicalNode ifBlock = (BlockLogicalNode)curRight;
+                curRight = ifBlock.print();
+                continue;
+            }
+            System.out.println("\t\t"+curRight.data.getId() + " " +curRight.data.getName());
+        }
+        System.out.println(union.data.getId() + " " + union.data.getName());
+        return union;
     }
 }

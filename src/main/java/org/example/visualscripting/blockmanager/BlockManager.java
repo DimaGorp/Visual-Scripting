@@ -36,12 +36,12 @@ public class BlockManager {
                     BlockNode next = logicalNode.getUnion();
                     BlockNode union = new BlockNode(newBlock);
                     union.next = next;
-                     if(logicalNode.getLeft().data.equals(logicalNode.getUnion().data) && logicalNode.getRight().data.equals(logicalNode.getUnion().data)){
+                    if(logicalNode.getLeft().data.equals(logicalNode.getUnion().data) && logicalNode.getRight().data.equals(logicalNode.getUnion().data)){
                         logicalNode.setLeft(union);
                         logicalNode.setRight(union);
                     }
                     logicalNode.setUnion(union);
-                   
+                    
                     return true;
                 }
                 if (logicalNode.getLeftId().equals(Id)) {
@@ -51,7 +51,24 @@ public class BlockManager {
                     logicalNode.setRight(new BlockNode(newBlock));
                     return true;
                 } else {
-                    return logicalNode.insert(newBlock, Id);
+                    if(logicalNode.insert(newBlock, Id)){
+                        return true;
+                    }else{
+                        cur = logicalNode.getUnion();
+                        if (cur.data.getId().equals(Id)) {  // Проверяем ID
+                            if (newBlock instanceof IfValueBlock) {
+                                BlockLogicalNode logicNode = new BlockLogicalNode(newBlock, cur.next);
+                                logicNode.insert(cur.next.data, Id);
+                                cur.next = logicNode;
+                                return true;
+                            }
+                            BlockNode next = cur.next;
+                            cur.next = new BlockNode(newBlock);
+                            cur.next.next = next;
+                            return true;
+                        }
+                        continue;
+                    }
                 }
                 //if(logicalNode.data.getId().equals(Id))
             }else {
@@ -81,19 +98,7 @@ public class BlockManager {
 
             if(cur.data instanceof IfValueBlock){
                 BlockLogicalNode ifBlock = (BlockLogicalNode)cur;
-                BlockNode union = ifBlock.getUnion();
-                System.out.println("\t"+ifBlock.getLeftId() + " - true");
-                BlockNode curLeft = ((BlockLogicalNode)cur).getLeft();
-                BlockNode curRight = ((BlockLogicalNode)cur).getRight();
-                for(; !(curLeft.data.equals(union.data) );curLeft = curLeft.next){
-                    System.out.println("\t\t"+curLeft.data.getId() + " " +curLeft.data.getName());
-                }
-                System.out.println("\t"+ifBlock.getRightId() + " - false");
-                for(; !(curRight.data.equals(union.data));curRight = curRight.next){
-                    System.out.println("\t\t"+curRight.data.getId() + " " +curRight.data.getName());
-                }
-                cur = ifBlock.getUnion();
-                System.out.println(cur.data.getId() + " " + cur.data.getName());
+                cur = ifBlock.print();
                 continue; 
             } 
             
